@@ -1,0 +1,53 @@
+<h1>Productos</h1>
+
+<div style="display: flex; flex-wrap: wrap; gap: 1rem;">
+  {{#each products}}
+    <div style="border: 1px solid #ccc; padding: 1rem; width: 200px;">
+      <h3>{{this.title}}</h3>
+      <p>{{this.description}}</p>
+      <p><strong>Precio:</strong> ${{this.price}}</p>
+      <p><strong>Stock:</strong> {{this.stock}}</p>
+      <p><strong>Categoría:</strong> {{this.category}}</p>
+      
+      <br>
+      <button onclick="addToCart('{{this._id}}')">Agregar al carrito</button>
+    </div>
+  {{/each}}
+</div>
+
+<div style="margin-top: 2rem;">
+  {{#if hasPrevPage}}
+    <a href="/products?page={{prevPage}}">⬅ Página anterior</a>
+  {{/if}}
+
+  <span style="margin: 0 1rem;">Página {{page}}</span>
+
+  {{#if hasNextPage}}
+    <a href="/products?page={{nextPage}}">Página siguiente ➡</a>
+  {{/if}}
+</div>
+
+<script>
+  async function addToCart(productId) {
+    const cartId = '688bd6a19559dfb4b55ff9bd'; 
+
+    try {
+      const res = await fetch(`/api/carts/${cartId}/products/${productId}`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      });
+
+      if (res.ok) {
+        alert('Producto agregado al carrito ✅');
+      } else {
+        const data = await res.json();
+        alert(`Error: ${data.message}`);
+      }
+    } catch (error) {
+      console.error('Error al agregar producto al carrito:', error);
+      alert('Hubo un error inesperado.');
+    }
+  }
+</script>

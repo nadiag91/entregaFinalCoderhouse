@@ -1,0 +1,40 @@
+
+<h1>Lista de productos</h1>
+
+
+<form method="GET" action="/products">
+  <input type="text" name="query" placeholder="Buscar por nombre o categoría" value="{{query}}">
+  <select name="sort">
+    <option value="">Ordenar por</option>
+    <option value="asc" {{#if (eq sort "asc")}}selected{{/if}}>Precio ascendente</option>
+    <option value="desc" {{#if (eq sort "desc")}}selected{{/if}}>Precio descendente</option>
+  </select>
+  <select name="limit">
+    <option value="5" {{#if (eq limit "5")}}selected{{/if}}>5</option>
+    <option value="10" {{#if (eq limit "10")}}selected{{/if}}>10</option>
+    <option value="20" {{#if (eq limit "20")}}selected{{/if}}>20</option>
+  </select>
+  <button type="submit">Filtrar</button>
+</form>
+
+<ul>
+  {{#each products}}
+    <li>
+      <strong>{{this.title}}</strong> - ${{this.price}} <br>
+      <em>{{this.description}}</em> (Stock: {{this.stock}})
+    </li>
+  {{/each}}
+</ul>
+
+<hr>
+
+<div>
+  Página {{page}} de {{totalPages}}<br>
+  {{#if hasPrevPage}}
+    <a href="?page={{prevPage}}&limit={{limit}}&sort={{sort}}&query={{query}}">← Anterior</a>
+  {{/if}}
+
+  {{#if hasNextPage}}
+    <a href="?page={{nextPage}}&limit={{limit}}&sort={{sort}}&query={{query}}">Siguiente →</a>
+  {{/if}}
+</div>

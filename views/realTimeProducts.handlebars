@@ -1,0 +1,18 @@
+<h1>Productos en tiempo real</h1>
+
+<ul id="product-list">
+  {{#each products}}
+    <li>{{title}} - ${{price}}
+    </li>
+  {{/each}}
+</ul>
+
+<h2>Agregar producto</h2>
+<form id="product-form">
+  <input name="title" placeholder="Título" required />
+  <input name="price" placeholder="Precio" type="number" required />
+  <button type="submit">Agregar</button>
+</form>
+
+<script src="/socket.io/socket.io.js"></script>
+<script src="/js/realtime.js"></script>
